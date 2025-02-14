@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:My_Note.ViewModels"
+             x:Class="My_Note.Views.NoteView">
+
+    <ContentView.BindingContext>
+        <viewmodel:NoteViewModel/>
+    </ContentView.BindingContext>
+
+    <VerticalStackLayout Padding="20" Spacing="15">
+
+        <Label 
+            FontSize="Medium"
+            Text="Note Data"
+            FontAttributes="Bold"
+            HorizontalOptions="Start" />
+
+        <Frame Padding="10" CornerRadius="10" BorderColor="Gray">
+            <VerticalStackLayout Spacing="10">
+
+                <Label 
+                    FontSize="Small"
+                    Text="Note Title"
+                    HorizontalOptions="Start" />
+                <Entry Placeholder="Title" Text="{Binding NoteTitle}" FontSize="Medium"/>
+
+                <Label 
+                    FontSize="Small"
+                    Text="Note Content"
+                    HorizontalOptions="Start" />
+                <Editor 
+                    Placeholder="Enter note content" Text="{Binding NoteContent}"
+                    HeightRequest="150"
+                    FontSize="Medium"/>
+
+                <Button Command="{Binding AddNoteCommand}" Text="Add Note" BackgroundColor="#4CAF50" TextColor="White"/>
+
+            </VerticalStackLayout>
+        </Frame>
+
+        <Label Text="Your Notes:" FontSize="Medium" FontAttributes="Bold"/>
+
+        <ListView ItemsSource="{Binding NoteCollection}" SelectedItem="{Binding SelectedNote}"
+                  HeightRequest="250">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding Title}" Detail="{Binding Content}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <HorizontalStackLayout Spacing="10">
+            <Button Command="{Binding UpdateNoteCommand}" Text="Edit Note" BackgroundColor="#2196F3" TextColor="White"/>
+            <Button Command="{Binding DeleteNoteCommand}" Text="Remove Note" BackgroundColor="#F44336" TextColor="White"/>
+           
+        </HorizontalStackLayout>
+
+    </VerticalStackLayout>
+</ContentView>
